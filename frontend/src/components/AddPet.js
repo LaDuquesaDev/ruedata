@@ -22,12 +22,12 @@ export default function AddPet() {
     specie: specie
   }
 
-
   const submit = async (e) => {
     e.preventDefault();
     axios.post("http://localhost:8000/", payload
     ).then(
-      console.log("NANI", payload)
+      console.log("NANI", payload),
+      navigate('/')
     )
   }
 
