@@ -2,11 +2,15 @@ const axios = require('axios');
 const cors = require('cors');
 const express = require('express')
 const app = express()
-const apiID = process.env.APIKEY || 'a5a7cdb9513e46f1829ceb09fe2a4152';
+const apiID = process.env.APIKEY || 'a4a28b6a71564fc3a9660ca6bf7dd153';
 const port = 8000
 
 const whitelist = ["http://localhost:3000"]
 app.use(cors({origin: whitelist}),express.json()) // agrega el header application/json
+
+app.get('/', (req, res) => {
+    console.log("works")
+})
 
 app.post('/', (req, res) => {
     const payload = req.body
@@ -16,11 +20,11 @@ app.post('/', (req, res) => {
         .catch(error => console.log(error))
 })
 
-app.get('/pet/:id', (req, res) => {
-    axios.get(`https://crudcrud.com/api/${apiID}/laduquesapets/${req.params.id}`)
-        .then(response => res.json(response.data))
-        .catch(error => console.log(error))
-})
+// app.get('/pet/:id', (req, res) => {
+//     axios.get(`https://crudcrud.com/api/${apiID}/laduquesapets/${req.params.id}`)
+//         .then(response => res.json(response.data))
+//         .catch(error => console.log(error))
+// })
 
 app.get('/pets/', (req, res) => {
     axios.get(`https://crudcrud.com/api/${apiID}/laduquesapets`)

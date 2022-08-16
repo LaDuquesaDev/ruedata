@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
+import '../styles/addpet.css'
 // import { AddPet } from './Functions'
 
 export default function AddPet() {
@@ -22,18 +23,18 @@ export default function AddPet() {
     specie: specie
   }
 
-  const submit = async (e) => {
+  const submit = (e) => {
     e.preventDefault();
     axios.post("http://localhost:8000/", payload
     ).then(
       console.log("NANI", payload),
-      navigate('/')
-    )
+      navigate('/Crud')
+    ).catch(error => console.log(error))
   }
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button className='addPet-button' variant="primary" onClick={handleShow}>
         Add Pet
       </Button>
 

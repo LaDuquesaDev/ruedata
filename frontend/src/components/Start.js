@@ -1,15 +1,19 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom";
-// import '../styles/start.css'
+// import React, { useEffect } from 'react';
+// import { useNavigate } from "react-router-dom";
+// // import '../styles/start.css'
 
-const Start = () => {
-    const navigate = useNavigate();
-    navigate('/AddPet');
-    return (
-        <button onClick={navigate}>
-            Click Me
-        </button>
-    )
-}
+// const Start = () => {
+//     const navigate = useNavigate(); 
 
-export default Start;
+//     useEffect(() => {
+//         navigate('/Crud');
+//     })
+
+//     return (
+//         <button onClick={navigate}>
+//             Click Me
+//         </button>
+//     )
+// }
+
+// export default Start;

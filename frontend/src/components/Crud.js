@@ -1,41 +1,43 @@
-// import React, { useState } from 'react';
-// import AddPet from './AddPet';
-// import '../styles/crud.css';
+import React, { useState, useEffect } from 'react';
+// import { BsTrash } from "react-icons/bs";
+// import { BsPencil } from "react-icons/bs";
+import AddPet from './AddPet';
+import axios from 'axios';
 
-// const Crud = () => {
+import '../styles/crud.css';
 
-// //     // const [pets, setPets] = useState([]);
+const Crud = () => {
+    const [pets, setPets] = useState([]);
+    // const [isLoading, setIsLoading] = useState(true);
 
-// //     // const getData = async () => {
-// //     //     console.log(getData);
-// //     //     const petsList = await DataPet();
-// //     //     console.log(petsList);
-// //     //     setPets(petsList);
-// //     // }
+    const getData = () => {
+        const response = axios.get("http://localhost:8000/pets/")
+        return response;
+    };
 
-// //     // useEffect(() => {
-// //     //     getData()
-// //     // }, [])
+    useEffect(() => {
+       getData().then((response) => {
+        setPets(response.data);
+       }).catch(error => console.log("ERROR",error))
+    }, [])
 
-// //     return (
-// //         <>
-// //             {/* <section className='pets-section'>
-// //             {pets != [] ? (
-// //                 pets.map(pet => {
-// //                     return (
-// //                         <div>
-// //                             <p>{pet.name}</p>
-// //                             <p>{pet.age}</p>
-// //                             <p>{pet.specie}</p>
-// //                         </div>
-// //                     )
-// //                 })
-// //                 ) : console.log('No pets registered')}
-// //             </section> */}
-// //             <MyModal getData={getData}></MyModal>
-// //         </>
-// //         )
-// //     // }   
-// }
+    return (
+        <>
+            <section className='pets-section'>                                
+            {pets !== [] ? (
+                pets.map(pet => {
+                    return (
+                        <div>
+                            <p>{pet.name} {pet.age} {pet.specie}</p>
+                        </div>
+                    )
+                })
+                ) : console.log('No pets registered')}
+            </section>
+            <AddPet/>
+        </>
+    )
+    
+}
 
-// export default Crud;
+export default Crud;
