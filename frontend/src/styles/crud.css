@@ -1,5 +1,12 @@
+.ppal-container{
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  grid-template-rows: 10% 80% 10%;
+}
+
 .pets-section{
-    display: flex;
-    justify-content: center;
-    color: black;
-  }
+  margin: 4em 0;
+  grid-column: 2/3;
+  align-items: center;
+  text-align: center;
+}

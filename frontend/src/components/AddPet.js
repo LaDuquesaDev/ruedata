@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -7,8 +6,7 @@ import axios from 'axios';
 import '../styles/addpet.css'
 // import { AddPet } from './Functions'
 
-export default function AddPet() {
-  const navigate = useNavigate();
+export default function AddPet({getData}) {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -27,14 +25,14 @@ export default function AddPet() {
     e.preventDefault();
     axios.post("http://localhost:8000/", payload
     ).then(
-      console.log("NANI", payload),
-      navigate('/Crud')
+      getData(),
+      handleClose()
     ).catch(error => console.log(error))
   }
 
   return (
     <>
-      <Button className='addPet-button' variant="primary" onClick={handleShow}>
+      <Button className='addPet-button' variant="primary" size="sm" onClick={handleShow}>
         Add Pet
       </Button>
 
