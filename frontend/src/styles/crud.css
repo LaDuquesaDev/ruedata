@@ -1,12 +1,15 @@
 .ppal-container{
   display: grid;
   grid-template-columns: 15% 70% 15%;
-  grid-template-rows: 10% 80% 10%;
+  grid-template-rows: 10% 10% 60% 10% 10%;
+  height: 100vh;
+  width: 100vw ;
 }
 
 .pets-section{
   margin: 4em 0;
   grid-column: 2/3;
+  grid-row: 3/4;
   align-items: center;
   text-align: center;
 }

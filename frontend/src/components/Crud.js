@@ -11,8 +11,7 @@ import '../styles/crud.css';
 
 const Crud = () => {
     const [pets, setPets] = useState([]);
-    const [confirm, setConfirm] = useState(false);
-    // const [isLoading, setIsLoading] = useState(true);
+    const [updateList, setUpdateList] = useState(false);
 
     //Read all records
     const getData = () => {
@@ -24,7 +23,7 @@ const Crud = () => {
         getData().then((response) => {
             setPets(response.data);
         }).catch(error => console.log("ERROR", error))
-    }, [])
+    }, [updateList])
 
 
     //Delete a record
@@ -40,30 +39,33 @@ const Crud = () => {
             cancelButtonColor: '#d33',
             cancelButtonText: 'Cancel',
             confirmButtonText: 'Yes, Remove'
-        })
-
-
-        axios.delete(`http://localhost:8000/pet/${petID}`).then((response) => {
-            if (response.status === 200) {
-                Swal.fire(
-                    'Removed',
-                    `Successfully Deleted`,
-                    'success'
-                )
-                setConfirm(!confirm)
-            } else {
-                Swal.fire(
-                    'Error',
-                    'There was a problem deleting the record',
-                    'error'
-                )
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8000/pet/${petID}`).then((response) => {
+                    if (response.status === 200) {
+                        Swal.fire(
+                            'Removed',
+                            `Successfully Deleted`,
+                            'success'
+                        )
+                        setUpdateList(!updateList)
+                    } else {
+                        Swal.fire(
+                            'Error',
+                            'There was a problem deleting the record',
+                            'error'
+                        )
+                    }
+                })
             }
         })
     }
 
 
     //Update a record
-
+    const handleEdit = () => {
+        console.log('Editado');
+    }
 
 
     return (
@@ -86,7 +88,7 @@ const Crud = () => {
                                     <th>{pet.age}</th>
                                     <th>{pet.specie}</th>
                                     <th><Button variant="danger" onClick={() => handleDelete(pet._id)}>Delete</Button>{' '}</th>
-                                    {/* <th><Button variant="outline-primary" onClick={() => handleEdit(pet)}>Edit</Button>{' '}</th> */}
+                                    <th><Button variant="outline-primary" onClick={() => handleEdit(pet._id)}>Edit</Button>{' '}</th>
                                 </tr>
                             )})
                             ) : console.log('No pets registered')

@@ -1,5 +1,3 @@
-/* .addPet-button{ 
-    display: flex;
-    justify-content: center;
-    margin: 2px;
-} */
+.addPet-button{ 
+    grid-column: 3/4;
+}

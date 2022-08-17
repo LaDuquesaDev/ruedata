@@ -30,6 +30,8 @@ export default function AddPet({getData}) {
     ).catch(error => console.log(error))
   }
 
+  
+
   return (
     <>
       <Button className='addPet-button' variant="primary" size="sm" onClick={handleShow}>
