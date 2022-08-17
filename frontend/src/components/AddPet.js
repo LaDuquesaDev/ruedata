@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -6,14 +6,42 @@ import axios from 'axios';
 import '../styles/addpet.css'
 // import { AddPet } from './Functions'
 
-export default function AddPet({getData}) {
+export default function AddPet({ getData, showInitialModal, setShowInitialModal, selectedPet, mode, setMode }) {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [specie, setSpecie] = useState("");
+  const [form, setState] = useState({
+    name: '',
+    age: '',
+    specie: ''
+  });
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false)
+    setShowInitialModal(false)
+  };
+
+  const handleShow = () => {
+    setShow(true)
+    setMode('Create')
+  };
+
+  // const updateField = e => setState({
+  //   ...form, //spread
+  //   [e.target.name]: e.target.value
+  // });  
+
+  useEffect(() => {
+    setShow(showInitialModal)
+    if (selectedPet) {
+      setState(currentForm => {
+        currentForm.title = selectedPet.title;
+        currentForm.content = selectedPet.content;
+        return currentForm
+      })
+    }
+  }, [showInitialModal])
 
   const payload = {
     name: name,
@@ -21,14 +49,25 @@ export default function AddPet({getData}) {
     specie: specie
   }
 
-  const submit = (e) => {
-    e.preventDefault();
-    axios.post("http://localhost:8000/", payload
-    ).then(
-      getData(),
-      handleClose()
-    ).catch(error => console.log(error))
-  }
+  // const printValues = e => {
+  //   e.preventDefault();
+  // };
+
+  const eventsSaveBtn = (e, petID) => {
+    if (mode === 'Edit') {
+      axios.put(`http://localhost:8000/pet/${petID}`)
+        .then((response) => {
+          getData()
+          handleClose();
+        });
+    } else if (mode === 'Create') {
+      axios.post("http://localhost:8000/", payload
+      ).then(
+        getData(),
+        handleClose()
+      ).catch(error => console.log(error))
+    }
+  };
 
   return (
     <>
@@ -45,6 +84,7 @@ export default function AddPet({getData}) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control
+                value={form.name}
                 onChange={(e) => setName(e.target.value)}
                 type="text"
                 placeholder="Enter Name"
@@ -54,7 +94,8 @@ export default function AddPet({getData}) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
               <Form.Label>Age</Form.Label>
               <Form.Control
-                onChange={(e) => setAge(e.target.value)} 
+                value={form.age}
+                onChange={(e) => setAge(e.target.value)}
                 type="number"
                 placeholder="Enter Age"
               />
@@ -62,7 +103,8 @@ export default function AddPet({getData}) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
               <Form.Label>Specie</Form.Label>
               <Form.Control
-                onChange={(e) => setSpecie(e.target.value)}  
+                value={form.specie}
+                onChange={(e) => setSpecie(e.target.value)}
                 type="text"
                 placeholder="Enter Specie"
               />
@@ -73,7 +115,7 @@ export default function AddPet({getData}) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={submit}>
+          <Button variant="primary" onClick={eventsSaveBtn}>
             Save Changes
           </Button>
         </Modal.Footer>

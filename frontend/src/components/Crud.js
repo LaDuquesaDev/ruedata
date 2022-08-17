@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { BsTrash } from "react-icons/bs";
-// import { BsPencil } from "react-icons/bs";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2'
@@ -12,7 +10,9 @@ import '../styles/crud.css';
 const Crud = () => {
     const [pets, setPets] = useState([]);
     const [confirm, setConfirm] = useState(false);
-    // const [isLoading, setIsLoading] = useState(true);
+    const [selectedPet, setSelectedPet] = useState("");
+    const [showInitialModal, setShowInitialModal] = useState(false);
+    const [mode, setMode] = useState("");
 
     //Read all records
     const getData = () => {
@@ -63,7 +63,11 @@ const Crud = () => {
 
 
     //Update a record
-
+    const handleEdit = (pet) => {
+        setMode('Edit')
+        setShowInitialModal(true)
+        setSelectedPet(pet)
+      }
 
 
     return (
@@ -86,7 +90,7 @@ const Crud = () => {
                                     <th>{pet.age}</th>
                                     <th>{pet.specie}</th>
                                     <th><Button variant="danger" onClick={() => handleDelete(pet._id)}>Delete</Button>{' '}</th>
-                                    {/* <th><Button variant="outline-primary" onClick={() => handleEdit(pet)}>Edit</Button>{' '}</th> */}
+                                    <th><Button variant="outline-primary" onClick={() => handleEdit(pet._id)}>Edit</Button>{' '}</th>
                                 </tr>
                             )})
                             ) : console.log('No pets registered')
@@ -94,7 +98,7 @@ const Crud = () => {
                     </tbody>
                 </Table>
             </section>
-            <AddPet getData={getData} />
+            <AddPet getData={getData} showInitialModal={showInitialModal} setShowInitialModal={setShowInitialModal} selectedPet={selectedPet} mode={mode} setMode={setMode}/>
         </div>
     )
 }
