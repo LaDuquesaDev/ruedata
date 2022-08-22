@@ -6,7 +6,8 @@ import axios from 'axios';
 import '../styles/addpet.css'
 // import { AddPet } from './Functions'
 
-export default function AddPet({getData}) {
+export default function AddPet({ getData }) {
+  // const [state, setState] = useState(0);
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -21,16 +22,16 @@ export default function AddPet({getData}) {
     specie: specie
   }
 
-  const submit = (e) => {
-    e.preventDefault();
-    axios.post("http://localhost:8000/", payload
-    ).then(
-      getData(),
-      handleClose()
-    ).catch(error => console.log(error))
+  const submit = () => {
+    axios.post("http://localhost:8000/", payload)
   }
 
-  
+  const eventsSaveBtn = () => {
+    submit()
+    getData()
+    handleClose()
+  }
+ 
 
   return (
     <>
@@ -56,7 +57,7 @@ export default function AddPet({getData}) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
               <Form.Label>Age</Form.Label>
               <Form.Control
-                onChange={(e) => setAge(e.target.value)} 
+                onChange={(e) => setAge(e.target.value)}
                 type="number"
                 placeholder="Enter Age"
               />
@@ -64,7 +65,7 @@ export default function AddPet({getData}) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
               <Form.Label>Specie</Form.Label>
               <Form.Control
-                onChange={(e) => setSpecie(e.target.value)}  
+                onChange={(e) => setSpecie(e.target.value)}
                 type="text"
                 placeholder="Enter Specie"
               />
@@ -75,7 +76,7 @@ export default function AddPet({getData}) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={submit}>
+          <Button variant="primary" onClick={eventsSaveBtn}>
             Save Changes
           </Button>
         </Modal.Footer>

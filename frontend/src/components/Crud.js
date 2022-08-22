@@ -13,18 +13,15 @@ const Crud = () => {
     const [pets, setPets] = useState([]);
     const [updateList, setUpdateList] = useState(false);
 
-    //Read all records
-    const getData = () => {
-        const response = axios.get("http://localhost:8000/pets/")
-        return response;
-    };
-
     useEffect(() => {
-        getData().then((response) => {
-            setPets(response.data);
-        }).catch(error => console.log("ERROR", error))
+        getData()
     }, [updateList])
 
+    //Read all records
+    const getData = async () => {
+        const response = await axios.get("http://localhost:8000/pets/");
+            setPets(response.data);
+    };
 
     //Delete a record
     const handleDelete = (petID) => {
@@ -32,7 +29,7 @@ const Crud = () => {
         Swal.fire({
             title: 'Are you sure to delete this register?',
             text: 'This action cannot be reversed',
-            icon: 'error',
+            icon: 'warning',
             confirmButtonText: 'Cool',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -79,9 +76,8 @@ const Crud = () => {
                             <th>Specie</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {
-                            pets !== [] ? (pets.map(pet => {
+                    <tbody className='pets-register'>
+                        {pets.map((pet) => {
                                 return(
                                 <tr key={pet._id}>
                                     <th>{pet.name}</th>
@@ -90,8 +86,8 @@ const Crud = () => {
                                     <th><Button variant="danger" onClick={() => handleDelete(pet._id)}>Delete</Button>{' '}</th>
                                     <th><Button variant="outline-primary" onClick={() => handleEdit(pet._id)}>Edit</Button>{' '}</th>
                                 </tr>
-                            )})
-                            ) : console.log('No pets registered')
+                                )
+                            })
                         }
                     </tbody>
                 </Table>
