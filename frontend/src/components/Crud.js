@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { BsTrash } from "react-icons/bs";
-// import { BsPencil } from "react-icons/bs";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2'
