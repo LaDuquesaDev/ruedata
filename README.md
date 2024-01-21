@@ -40,4 +40,4 @@ Si entras en [La Duquesa Pets](https://www.instagram.com/laduquesa.pets/) sabrá
 
 ## 3. Author 👩‍💻
 
-[Yulimar Duque](https://www.linkedin.com/in/yulimarduque/) front-end developer
+[Yulimar Duque](https://www.linkedin.com/in/laduquesadev/) front-end developer
